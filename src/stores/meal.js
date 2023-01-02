@@ -1,15 +1,17 @@
 import { defineStore } from "pinia";
+import Api from "@/apis/BaseAPI";
 
 export const useMealStore = defineStore("meal", {
     state: () => ({
-        meals: ["Salmon"],
+        searchedMeals: [],
     }),
     getters: {
         getMeals: (state) => state.meals[0],
     },
     actions: {
-        convertSalmon() {
-            this.meals[0] = "Shark";
+        async searchMeals(keyword) {
+            const response = await Api.get(`search.php?s=${keyword}`);
+            this.searchedMeals = response.data.meals;
         },
     },
 });

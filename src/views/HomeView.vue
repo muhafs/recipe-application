@@ -27,9 +27,9 @@ import Api from "@/apis/BaseAPI";
 const meals = ref([]);
 
 onMounted(async () => {
-    const response = await Api.get("search.php?s=Arrabiata");
+    const response = await Api.get("list.php?i=list");
 
-    meals.value.push(response.data);
+    meals.value = response.data;
 });
 
 const letters = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
