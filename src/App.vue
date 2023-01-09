@@ -1,11 +1,11 @@
 <template>
-    <div class="min-w-screen bg-gray-100">
-        <NavBar />
+    <div class="min-h-screen bg-gray-100">
+        <TheHeader />
 
         <RouterView />
     </div>
 </template>
 
 <script setup>
-import NavBar from "@/components/NavBar.vue";
+import TheHeader from "@/components/TheHeader.vue";
 </script>

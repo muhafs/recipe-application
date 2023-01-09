@@ -36,7 +36,7 @@
                     <button
                         class="rounded bg-sky-600 px-4 py-2 text-white shadow"
                         type="button"
-                        @click="openModal(meal.idMeal)"
+                        @click="openModal(meal)"
                     >
                         More Detail
                     </button>
@@ -50,26 +50,15 @@
         @click.self="isModalOpen = false"
         class="fixed inset-0 grid min-h-screen w-full place-items-center bg-black/20"
     >
-        <div class="rounded-lg bg-white p-4">
-            <header class="">{{ mealDetails.strMeal }}</header>
-            <main class="">
-                <img :src="mealDetails.strMealThumb" alt="" />
-
-                <div class="">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nostrum provident adipisci necessitatibus nulla vero.
-                    Dolorum praesentium libero optio voluptates? A.
-                </div>
-            </main>
-        </div>
+        <ModalDetail :meal="mealDetails" />
     </div>
 </template>
 
 <script setup>
+import ModalDetail from "@/components/ModalDetail.vue";
 import { ref, computed, onMounted } from "vue";
 import { useMealStore } from "@/stores/meal";
 import { useRoute } from "vue-router";
-import Api from "@/apis/BaseAPI";
 
 const mealStore = useMealStore();
 const route = useRoute();
@@ -78,16 +67,15 @@ const meals = computed(() => mealStore.searchedMeals);
 
 const keyword = ref("");
 const isModalOpen = ref(false);
-const mealDetails = ref([]);
+const mealDetails = ref(null);
 
 const searchMeal = () => {
     keyword.value ?? null;
     mealStore.searchMeals(keyword.value);
 };
 
-const openModal = async (id) => {
-    const response = await Api.get(`lookup.php?i=${id}`);
-    mealDetails.value = response.data.meals[0];
+const openModal = (meal) => {
+    mealDetails.value = meal;
 
     isModalOpen.value = true;
 };
